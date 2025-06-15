@@ -1,0 +1,56 @@
+import smtplib
+from email.mime.text import MIMEText
+from datetime import datetime
+
+# === YOUR EMAIL CREDENTIALS ===
+sender_email = ""
+sender_password = ""  # Use Gmail App Password
+
+# === ASK FOR RECEIVER EMAIL ===
+receiver_email = input("Enter recipient's email: ")
+
+# === GET CURRENT DATE AND TIME ===
+current_time = datetime.now().strftime("%A, %d %B %Y - %I:%M %p")
+
+# === EMAIL SUBJECT AND BODY ===
+subject = "☕ Your Soul Sip from Shree Paras Enterprises 🌿"
+
+body = f"""
+🌦️ Good Day from Shree Paras Enterprises! ☕🌿
+
+Namaste 🙏,
+
+Somewhere between the sound of the rain and the warmth of your favorite cup of chai…  
+Magic is brewing. 🍵✨
+
+💭 Here's your soul sip for the day:
+🗓️ {current_time}  
+🌿 "Life is like a cup of tea — it’s all about how you make it."
+
+As you cradle your steaming cup in your hands, take a moment to pause.  
+Our special **Tea Masala** — a handcrafted blend of cardamom, cinnamon, ginger, cloves, and love — is not just a spice mix.  
+It’s an emotion. A tradition. A wellness ritual that connects generations.
+—
+With every cup, you’re not just tasting tea.  
+You’re tasting heritage. 💛
+
+Stay warm, stay wonderful.  
+🫖 Yours truly,  
+**Team Shree Paras Enterprises**  
+
+"""
+
+# === SETUP EMAIL MESSAGE ===
+msg = MIMEText(body)
+msg["Subject"] = subject
+msg["From"] = sender_email
+msg["To"] = receiver_email
+
+# === SEND EMAIL ===
+try:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender_email, sender_password)
+        server.send_message(msg)
+    print(f"✅ Email sent successfully to {receiver_email}!")
+except Exception as e:
+    print("❌ Error:", e)
